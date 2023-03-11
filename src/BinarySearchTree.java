@@ -263,8 +263,8 @@ public class BinarySearchTree {
      * @return A String representation of the traversal
      */
     public String getInOrderStr() {
-        // TODO
-        return null;
+
+        return getInOrderStr();
     }
 
     /**
@@ -274,8 +274,19 @@ public class BinarySearchTree {
      * @return A String representation of the traversal
      */
     private String getInOrderStr(BinaryTreeNode curNode) {
-        // TODO
-        return null;
+        String result;
+
+        if (curNode == null){
+            return "";
+        }
+        else {
+            getInOrderStr(curNode.getLeft());
+            result = ", " + curNode.getItem();
+            getInOrderStr(curNode.getRight());
+
+            return result;
+        }
+
     }
 
     /**
