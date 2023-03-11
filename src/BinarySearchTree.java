@@ -174,8 +174,8 @@ public class BinarySearchTree {
     /**
      * Returns a Node containing the given integer or null if one is not found
      *
-     * @param searchTargetData    The integer to search for
-     * @param parentNode The current Node in the traversal
+     * @param searchTargetData The integer to search for
+     * @param parentNode       The current Node in the traversal
      * @return A Node containing the given integer or null if one is not found
      */
     private BinaryTreeNode search(int searchTargetData, BinaryTreeNode parentNode) {
@@ -228,8 +228,7 @@ public class BinarySearchTree {
      * @return A String representation of the traversal
      */
     public String getPreOrderStr() {
-        // TODO
-        return null;
+        return getPreOrderStr(this.root);
     }
 
     /**
@@ -239,8 +238,22 @@ public class BinarySearchTree {
      * @return A String representation of the traversal
      */
     private String getPreOrderStr(BinaryTreeNode curNode) {
-        // TODO
-        return null;
+        String result;
+
+        if (curNode == null) {
+            return "";
+        } else if (curNode == root) {
+            result = Integer.toString(curNode.getItem());
+            result += getPreOrderStr(curNode.getLeft());
+            result += getPreOrderStr(curNode.getRight());
+            return result;
+        } else {
+
+            result = ", " + curNode.getItem();
+            result += getPreOrderStr(curNode.getLeft());
+            result += getPreOrderStr(curNode.getRight());
+            return result;
+        }
     }
 
     /**
