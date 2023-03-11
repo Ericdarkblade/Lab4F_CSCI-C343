@@ -102,7 +102,7 @@ public class BinarySearchTree {
      * @param parentNode       The current Node in the traversal
      * @return The Node containing the integer to remove or null if one is not found
      */
-    private BinaryTreeNode remove(int removeDataTarget, BinaryTreeNode parentNode) {
+    private BinaryTreeNode remove(int removeDataTarget, BinaryTreeNode parentNode) { //Todo Check if grandchild needs to be replaced with getleftMax
         int parentData = parentNode.getItem();
         BinaryTreeNode leftChildNode = parentNode.getLeft();
         BinaryTreeNode rightChildNode = parentNode.getRight();
@@ -174,13 +174,51 @@ public class BinarySearchTree {
     /**
      * Returns a Node containing the given integer or null if one is not found
      *
-     * @param data    The integer to search for
-     * @param curNode The current Node in the traversal
+     * @param searchTargetData    The integer to search for
+     * @param parentNode The current Node in the traversal
      * @return A Node containing the given integer or null if one is not found
      */
-    private BinaryTreeNode search(int data, BinaryTreeNode curNode) {
-        // TODO
-        return null;
+    private BinaryTreeNode search(int searchTargetData, BinaryTreeNode parentNode) {
+        int parentData = parentNode.getItem();
+        BinaryTreeNode leftChildNode = parentNode.getLeft();
+        BinaryTreeNode rightChildNode = parentNode.getRight();
+        enum pathCheck {goRightChild, goLeftChild, foundRightChild, foundLeftChild}
+
+        pathCheck nextChildPath = searchTargetData > parentData ? pathCheck.goRightChild : pathCheck.goLeftChild;
+
+        //Checks if left or right child is null and updates case
+        switch (nextChildPath) {
+            case goLeftChild -> {
+                if (leftChildNode == null || leftChildNode.getItem() == searchTargetData) {
+                    nextChildPath = pathCheck.foundLeftChild;
+                }
+            }
+            case goRightChild -> {
+                if (rightChildNode == null || rightChildNode.getItem() == searchTargetData) {
+                    nextChildPath = pathCheck.foundRightChild;
+                }
+            }
+        }
+
+
+        switch (nextChildPath) {
+            case goLeftChild -> {
+                return search(searchTargetData, leftChildNode);
+            }
+            case foundLeftChild -> {
+                return leftChildNode;
+            }
+
+            case goRightChild -> {
+                return search(searchTargetData, rightChildNode);
+            }
+            case foundRightChild -> {
+                return rightChildNode;
+            }
+            default -> {
+                return null; //I don't know if we ever get here? I'm pretty sure null should be returned if leftChild is null
+            }
+        }
     }
 
     /**
